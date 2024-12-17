@@ -10,6 +10,7 @@ export default {
         outline: "var(--color-outline)",
         darkError: "var(--color-dark-error)",
         paper: "var(--color-paper)",
+        border: "var(--color-border)",
         primary: "var(--color-primary)",
         background: "var(--color-background)",
         'primary-contrast': "var(--color-primary-contrast)",

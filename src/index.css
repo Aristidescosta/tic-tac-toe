@@ -11,7 +11,15 @@
   --color-paper: #232323;
   --color-primary: #009688;
   --color-background: #2b2e4a;
+  --color-border: #333658;
   --color-primary-contrast: #ffffff;
+}
+
+
+html,
+body {
+    overflow: overlay;
+    @apply bg-background text-error w-screen h-screen underline-offset-8
 }
 
 .colored::before{
