@@ -17,6 +17,9 @@ export const useBoard = create<Store>()((set, get) => ({
     handleSquareClick: (position: number) => {
         const { squares, xIsNext } = get();
         const nextSquares = squares.slice();
+        if (squares[position]) {
+            return;
+        }
         if (xIsNext) {
             nextSquares[position] = "X";
         } else {
