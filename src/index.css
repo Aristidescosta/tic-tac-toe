@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-text: #ffffff;
+  --color-error: #980000;
+  --color-error-contrast: #980000a9;
+  --color-paper: #232323;
+  --color-primary: #009688;
+  --color-background: #2b2e4a;
+  --color-primary-contrast: #ffffff;
+}
