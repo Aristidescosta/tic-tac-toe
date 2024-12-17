@@ -4,8 +4,10 @@
 
 :root {
   --color-text: #ffffff;
-  --color-error: #980000;
-  --color-error-contrast: #980000a9;
+  --color-error: #e84545;
+  --color-error-contrast: #8f3749;
+  --color-outline: #53344a;
+  --color-dark-error: #673548;
   --color-paper: #232323;
   --color-primary: #009688;
   --color-background: #2b2e4a;
