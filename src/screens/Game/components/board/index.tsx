@@ -1,4 +1,3 @@
-import React from 'react'
 import { useBoard } from '@/hooks/useBoard'
 import { Square } from '../square';
 
@@ -26,3 +25,5 @@ export const Board = () => {
         </div>
     )
 }
+
+

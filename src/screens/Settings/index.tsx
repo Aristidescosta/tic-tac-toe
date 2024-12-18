@@ -1,11 +1,11 @@
+import { useNavigate } from 'react-router'
 import { useState } from 'react'
 
 import { InputRatio } from './componentes/InputRatio'
-import { GAME_MODES } from '@/utils/constants'
-import { GameModeType } from '@/types'
-import { PlayerType } from '@/types/Player'
 import { usePlayers } from '@/hooks/usePlayers'
-import { useNavigate } from 'react-router'
+import { GAME_MODES } from '@/utils/constants'
+import { PlayerType } from '@/types/Player'
+import { GameModeType } from '@/types'
 
 export const Settings = () => {
     const [selectedGameMode, setSelectedGameMode] = useState(GAME_MODES[0])
@@ -34,10 +34,8 @@ export const Settings = () => {
     }
 
     const handleSubmit = () => {
-        console.log('Players data:', playersData)
-        console.log('Selected game mode:', selectedGameMode)
-        const NEW_PLAYERS_DATA: PlayerType[] = [{ ...playersData[0], name: playersData[0].name.slice(0, 5) }, { ...playersData[1], name: playersData[1].name.slice(0, 5) }]
-        addPlayers(NEW_PLAYERS_DATA)
+        //const NEW_PLAYERS_DATA: PlayerType[] = [{ ...playersData[0], name: playersData[0].name.slice(0, 5) }, { ...playersData[1], name: playersData[1].name.slice(0, 5) }]
+        addPlayers(playersData)
         navigate("/game")
     }
 
