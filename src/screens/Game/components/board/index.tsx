@@ -7,7 +7,7 @@ export const Board = () => {
     const handleClick = useBoard(state => state.handleSquareClick);
 
     return (
-        <div className='after:clear-both after:table'>
+        <div>
             <div>
                 <Square value={squares[0]} onSquareClick={() => handleClick(0)} borders={{ bottom: true, right: true }} />
                 <Square value={squares[1]} onSquareClick={() => handleClick(1)} borders={{ bottom: true, right: true, left: true }} />

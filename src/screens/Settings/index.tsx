@@ -36,7 +36,8 @@ export const Settings = () => {
     const handleSubmit = () => {
         console.log('Players data:', playersData)
         console.log('Selected game mode:', selectedGameMode)
-        addPlayers(playersData)
+        const NEW_PLAYERS_DATA: PlayerType[] = [{ ...playersData[0], name: playersData[0].name.slice(0, 5) }, { ...playersData[1], name: playersData[1].name.slice(0, 5) }]
+        addPlayers(NEW_PLAYERS_DATA)
         navigate("/game")
     }
 
