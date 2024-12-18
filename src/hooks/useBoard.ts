@@ -1,3 +1,4 @@
+import { PlayerType } from '@/types/Player'
 import { create } from 'zustand'
 
 type Store = {
@@ -6,18 +7,23 @@ type Store = {
     handleSquareClick: (position: number) => void
     resetBoard: () => void,
     winner: null | string,
+    players: PlayerType[],
+    addPlayers: (players: PlayerType | PlayerType[]) => void,
+    scoreboard: { playerX: number, playerO: number }
 }
 
 const INITIAL_DATA = {
     squares: Array(9).fill(null),
     xIsNext: true,
     winner: null,
+    players: [],
+    scoreboard: { playerX: 0, playerO: 0 }
 }
 
 export const useBoard = create<Store>()((set, get) => ({
     ...INITIAL_DATA,
     handleSquareClick: (position: number) => {
-        const { squares, xIsNext } = get();
+        const { squares, xIsNext, scoreboard } = get();
         if (squares[position] || calculateWinner(squares)) {
             console.log("Aqui mesmo já deveria funcionar")
             set((state) => ({ ...state, winner: calculateWinner(squares) }));
@@ -32,10 +38,26 @@ export const useBoard = create<Store>()((set, get) => ({
         } else {
             nextSquares[position] = "O";
         }
-        set((state) => ({ ...state, squares: nextSquares, xIsNext: !xIsNext, winner: calculateWinner(nextSquares) }));
+        if (calculateWinner(nextSquares)) {
+            const winner = calculateWinner(nextSquares);
+            switch (winner) {
+                case "X":
+                    scoreboard.playerX++;
+                    break;
+
+                default:
+                    scoreboard.playerO++;
+                    break;
+            }
+        }
+        set((state) => ({ ...state, squares: nextSquares, xIsNext: !xIsNext, winner: calculateWinner(nextSquares), scoreboard: scoreboard, }));
     },
     resetBoard: () => {
         set((state) => ({ ...state, ...INITIAL_DATA }));
+    },
+    addPlayers: (player: PlayerType | PlayerType[]) => {
+        const PLAYERS = Array.isArray(player) ? player : [player];
+        set((state) => ({ ...state, players: [...state.players, ...PLAYERS] }))
     },
 }))
 

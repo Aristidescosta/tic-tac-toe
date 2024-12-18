@@ -1,29 +1,60 @@
-import { useBoard } from '@/hooks/useBoard'
+
+import { useBoard } from '@/hooks/useBoard';
 import { Square } from '../square';
 
 export const Board = () => {
     const squares = useBoard(state => state.squares);
-    const handleClick = useBoard(state => state.handleSquareClick);
+    const handleSquareClick = useBoard(state => state.handleSquareClick);
+
+    const getTheCorrectBorderSquare = (position: number) => {
+        switch (position) {
+            case 0:
+                return { bottom: true, right: true }
+            case 1:
+                return { bottom: true, right: true, left: true }
+            case 2:
+                return { bottom: true, left: true }
+            case 3:
+                return { bottom: true, right: true, }
+            case 4:
+                return { bottom: true, right: true, left: true }
+            case 5:
+                return { bottom: true, left: true, }
+            case 6:
+                return { right: true }
+            case 7:
+                return { left: true, right: true, }
+
+            default:
+                return { left: true }
+        }
+    }
+
+    const rows = [];
+    const rowSize = 3;
+
+
+    for (let i = 0; i < Object.keys(squares).length; i += rowSize) {
+        //Agrupa os itens por linha
+        const row = Object.entries(squares).slice(i, i + rowSize);
+        rows.push(row);
+    }
 
     return (
         <div>
-            <div>
-                <Square value={squares[0]} onSquareClick={() => handleClick(0)} borders={{ bottom: true, right: true }} />
-                <Square value={squares[1]} onSquareClick={() => handleClick(1)} borders={{ bottom: true, right: true, left: true }} />
-                <Square value={squares[2]} onSquareClick={() => handleClick(2)} borders={{ bottom: true, left: true }} />
-            </div>
-            <div>
-                <Square value={squares[3]} onSquareClick={() => handleClick(3)} borders={{ bottom: true, right: true, }} />
-                <Square value={squares[4]} onSquareClick={() => handleClick(4)} borders={{ bottom: true, right: true, left: true }} />
-                <Square value={squares[5]} onSquareClick={() => handleClick(5)} borders={{ bottom: true, left: true, }} />
-            </div>
-            <div>
-                <Square value={squares[6]} onSquareClick={() => handleClick(6)} borders={{ right: true, }} />
-                <Square value={squares[7]} onSquareClick={() => handleClick(7)} borders={{ left: true, right: true, }} />
-                <Square value={squares[8]} onSquareClick={() => handleClick(8)} borders={{ left: true, }} />
-            </div>
+            {rows.map((row, rowIndex) => (
+                <div key={rowIndex}>
+                    {row.map(([index, value]) => (
+                        <Square
+                            key={index}
+                            value={value}
+                            onSquareClick={() => handleSquareClick(parseInt(index))}
+                            borders={getTheCorrectBorderSquare(parseInt(index))}
+                        />
+                    ))}
+                </div>
+            ))}
         </div>
     )
 }
-
 

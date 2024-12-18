@@ -2,8 +2,8 @@ import { useNavigate } from 'react-router'
 import { useState } from 'react'
 
 import { InputRatio } from './componentes/InputRatio'
-import { usePlayers } from '@/hooks/usePlayers'
 import { GAME_MODES } from '@/utils/constants'
+import { useBoard } from '@/hooks/useBoard'
 import { PlayerType } from '@/types/Player'
 import { GameModeType } from '@/types'
 
@@ -12,15 +12,17 @@ export const Settings = () => {
     const [playersData, setPlayersData] = useState<PlayerType[]>([
         {
             mark: "x",
-            name: ""
+            name: "X",
+            point: 0
         },
         {
             mark: "o",
-            name: ""
+            name: "O",
+            point: 0
         }
     ])
 
-    const addPlayers = usePlayers(state => state.addPlayers)
+    const addPlayers = useBoard(state => state.addPlayers)
     const navigate = useNavigate();
 
     const handlePlayerInputChange = (playerIndex: number, value: string, mark: string) => {
