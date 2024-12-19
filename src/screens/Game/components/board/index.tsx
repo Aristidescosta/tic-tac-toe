@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 
 import { useBoard } from '@/hooks/useBoard';
 import { Square } from '../square';

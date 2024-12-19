@@ -7,6 +7,7 @@ import { ModalWinner } from '@/components'
 export const Game = () => {
     const xIsNext = useBoard(state => state.xIsNext)
     const winner = useBoard(state => state.winner)
+    const isDraw = useBoard(state => state.isDraw)
     const players = useBoard(state => state.players)
     const scoreboard = useBoard(state => state.scoreboard)
     const X_PLAYER = players[0]
@@ -34,7 +35,7 @@ export const Game = () => {
                     </div>
                     <Switch />
                 </section>
-                {winner && <ModalWinner winner={winner} onRestart={() => console.log("Restart a game")} />}
+                {(winner || isDraw) && <ModalWinner />}
             </main>
         </>
     )

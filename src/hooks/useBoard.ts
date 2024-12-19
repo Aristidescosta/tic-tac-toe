@@ -7,17 +7,19 @@ type Store = {
     handleSquareClick: (position: number) => void
     resetBoard: () => void,
     winner: null | string,
+    isDraw: boolean,
     players: PlayerType[],
     addPlayers: (players: PlayerType | PlayerType[]) => void,
-    scoreboard: { playerX: number, playerO: number }
+    scoreboard: { playerX: number, playerO: number, draw: number }
 }
 
 const INITIAL_DATA = {
     squares: Array(9).fill(null),
     xIsNext: true,
     winner: null,
+    isDraw: false,
     players: [],
-    scoreboard: { playerX: 0, playerO: 0 }
+    scoreboard: { playerX: 0, playerO: 0, draw: 0 }
 }
 
 export const useBoard = create<Store>()((set, get) => ({
@@ -25,8 +27,6 @@ export const useBoard = create<Store>()((set, get) => ({
     handleSquareClick: (position: number) => {
         const { squares, xIsNext, scoreboard } = get();
         if (squares[position] || calculateWinner(squares)) {
-            console.log("Aqui mesmo já deveria funcionar")
-            set((state) => ({ ...state, winner: calculateWinner(squares) }));
             return;
         }
         const nextSquares = squares.slice();
@@ -44,16 +44,19 @@ export const useBoard = create<Store>()((set, get) => ({
                 case "X":
                     scoreboard.playerX++;
                     break;
-
                 default:
                     scoreboard.playerO++;
                     break;
             }
         }
-        set((state) => ({ ...state, squares: nextSquares, xIsNext: !xIsNext, winner: calculateWinner(nextSquares), scoreboard: scoreboard, }));
+        if (calculateIsDraw(nextSquares)) {
+            scoreboard.draw++;
+        }
+        set((state) => ({ ...state, squares: nextSquares, xIsNext: !xIsNext, winner: calculateWinner(nextSquares), isDraw: calculateIsDraw(nextSquares) ,scoreboard: scoreboard, }));
     },
     resetBoard: () => {
-        set((state) => ({ ...state, ...INITIAL_DATA }));
+        const { xIsNext, scoreboard } = get();
+        set((state) => ({ ...state, ...INITIAL_DATA, xIsNext: !xIsNext, scoreboard }));
     },
     addPlayers: (player: PlayerType | PlayerType[]) => {
         const PLAYERS = Array.isArray(player) ? player : [player];
@@ -79,4 +82,12 @@ const calculateWinner = (squares: null[] | string[]) => {
         }
     }
     return null;
+}
+
+const calculateIsDraw = (squares: null[] | string[]) => {
+    const isDraw = squares.every(square => square !== null);
+    if (isDraw) {
+        return true;
+    }
+    return false;
 }
